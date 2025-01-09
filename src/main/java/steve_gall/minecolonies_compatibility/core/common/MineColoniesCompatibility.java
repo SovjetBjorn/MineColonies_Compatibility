@@ -20,6 +20,7 @@ import steve_gall.minecolonies_compatibility.core.client.gui.SmithingTeachScreen
 import steve_gall.minecolonies_compatibility.core.common.config.MineColoniesCompatibilityConfigCommon;
 import steve_gall.minecolonies_compatibility.core.common.config.MineColoniesCompatibilityConfigServer;
 import steve_gall.minecolonies_compatibility.core.common.crafting.BucketFillingRecipeStorage;
+import steve_gall.minecolonies_compatibility.core.common.crafting.RecipeTestRecipeStorage;
 import steve_gall.minecolonies_compatibility.core.common.crafting.SmithingRecipeStorage;
 import steve_gall.minecolonies_compatibility.core.common.init.ModBuildingModules;
 import steve_gall.minecolonies_compatibility.core.common.init.ModCraftingTypes;
@@ -27,6 +28,7 @@ import steve_gall.minecolonies_compatibility.core.common.init.ModGuardTypes;
 import steve_gall.minecolonies_compatibility.core.common.init.ModItems;
 import steve_gall.minecolonies_compatibility.core.common.init.ModJobs;
 import steve_gall.minecolonies_compatibility.core.common.init.ModMenuTypes;
+import steve_gall.minecolonies_compatibility.core.common.init.ModRecipes;
 import steve_gall.minecolonies_compatibility.core.common.init.ModToolTypes;
 import steve_gall.minecolonies_compatibility.core.common.network.NetworkChannel;
 import steve_gall.minecolonies_compatibility.module.common.ModuleManager;
@@ -53,6 +55,8 @@ public class MineColoniesCompatibility
 		ModJobs.REGISTER.register(fml_bus);
 		ModCraftingTypes.REGISTER.register(fml_bus);
 		ModMenuTypes.REGISTER.register(fml_bus);
+		ModRecipes.TYPES.register(fml_bus);
+		ModRecipes.SERIALIERS.register(fml_bus);
 		fml_bus.addListener(this::onFMLCommonSetup);
 		fml_bus.addListener(this::onFMLClientSetup);
 
@@ -64,6 +68,7 @@ public class MineColoniesCompatibility
 
 		CustomizedRecipeStorageRegistry.INSTANCE.register(BucketFillingRecipeStorage.ID, BucketFillingRecipeStorage::serialize, BucketFillingRecipeStorage::deserialize);
 		CustomizedRecipeStorageRegistry.INSTANCE.register(SmithingRecipeStorage.ID, SmithingRecipeStorage::serialize, SmithingRecipeStorage::deserialize);
+		CustomizedRecipeStorageRegistry.INSTANCE.register(RecipeTestRecipeStorage.ID, RecipeTestRecipeStorage::serialize, RecipeTestRecipeStorage::new);
 
 		DeliverableObjectRegistry.INSTANCE.register(Butcherable.ID, Butcherable::serialize, Butcherable::deserialize);
 	}
@@ -83,12 +88,6 @@ public class MineColoniesCompatibility
 			ModBuildings.deliveryman.get().getModuleProducers().add(ModBuildingModules.FLUID_MANAGER_WORK);
 			ModBuildings.deliveryman.get().getModuleProducers().add(ModBuildingModules.FLUID_MANAGER_BUCKET_FILLING);
 			ModBuildings.deliveryman.get().getModuleProducers().add(ModBuildingModules.FLUID_MANAGER_LAVA_CAULDRON);
-
-			ModBuildings.swineHerder.get().getModuleProducers().add(ModBuildingModules.BUTCHER_WORK);
-			ModBuildings.chickenHerder.get().getModuleProducers().add(ModBuildingModules.BUTCHER_WORK);
-			ModBuildings.cowboy.get().getModuleProducers().add(ModBuildingModules.BUTCHER_WORK);
-			ModBuildings.rabbitHutch.get().getModuleProducers().add(ModBuildingModules.BUTCHER_WORK);
-			ModBuildings.shepherd.get().getModuleProducers().add(ModBuildingModules.BUTCHER_WORK);
 		});
 	}
 

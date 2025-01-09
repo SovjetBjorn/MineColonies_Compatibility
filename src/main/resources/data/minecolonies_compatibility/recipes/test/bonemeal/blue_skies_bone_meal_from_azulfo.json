@@ -1,0 +1,15 @@
+{
+	"type": "minecolonies_compatibility:test",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "blue_skies"
+		}
+	],
+	"job": "crusher",
+	"target": "blue_skies:bone_meal_from_azulfo",
+	"result": "minecraft:bone_meal",
+	"ingredients": [
+		"blue_skies:azulfo_horn"
+	]
+}

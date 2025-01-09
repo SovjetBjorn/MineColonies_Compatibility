@@ -1,11 +1,13 @@
 package steve_gall.minecolonies_compatibility.module.client.jei;
 
+import java.util.Collections;
 import java.util.stream.Stream;
 
 import com.minecolonies.api.MinecoloniesAPIProxy;
 import com.minecolonies.api.blocks.ModBlocks;
 import com.minecolonies.api.colony.jobs.registry.JobEntry;
 import com.minecolonies.api.crafting.IGenericRecipe;
+import com.minecolonies.api.crafting.ItemStorage;
 import com.minecolonies.api.research.IGlobalResearch;
 
 import mezz.jei.api.IModPlugin;
@@ -17,6 +19,7 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import steve_gall.minecolonies_compatibility.api.client.jei.GhostIngredientHandler;
@@ -27,7 +30,10 @@ import steve_gall.minecolonies_compatibility.api.common.plant.FruitIconCache;
 import steve_gall.minecolonies_compatibility.core.client.gui.SmithingTeachScreen;
 import steve_gall.minecolonies_compatibility.core.client.gui.TeachRecipeScreen;
 import steve_gall.minecolonies_compatibility.core.common.MineColoniesCompatibility;
+import steve_gall.minecolonies_compatibility.core.common.crafting.RecipeTest;
+import steve_gall.minecolonies_compatibility.core.common.crafting.RecipeTestRecipeStorage;
 import steve_gall.minecolonies_compatibility.core.common.init.ModJobs;
+import steve_gall.minecolonies_compatibility.core.common.init.ModRecipes;
 import steve_gall.minecolonies_compatibility.module.client.jei.ResearchCategory.ResearchCache;
 
 @JeiPlugin
@@ -49,6 +55,24 @@ public class ModPlugin implements IModPlugin
 		registration.addRecipes(ModJeiRecipeTypes.RESEARCH, this.getGlobalResearches().map(ResearchCache::new).toList());
 		registration.addRecipes(ModJeiRecipeTypes.ORCHARDIST_FRUIT, CustomizedFruit.getRegistry().values().stream().map(FruitIconCache::new).toList());
 		registration.addRecipes(ModJeiRecipeTypes.BUTCHER_BUTCHERABLE, CustomizedButcherable.getRegistry().values().stream().map(ButcherableIconCache::new).toList());
+		
+		var mc = Minecraft.getInstance();
+		var recipeManager = mc.level.getRecipeManager();
+		
+		for (var test : recipeManager.getAllRecipesFor(ModRecipes.TEST_TYPE.get()))
+		{
+			var result = RecipeTest.test(recipeManager, test);
+			
+			if (result.test())
+			{
+				var recipeStorage = new RecipeTestRecipeStorage(test, //
+					test.getIngredientItems().stream().map(i -> new ItemStorage(new ItemStack(i))).toList(), //
+					result.recipe().getResultItem());
+				registration.addRecipes(createRecipeType(test.getJob()), Collections.singletonList(recipeStorage.getGenericRecipe()));
+			}
+
+		}
+		
 	}
 
 	@Override

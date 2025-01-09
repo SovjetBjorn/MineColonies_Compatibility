@@ -1,0 +1,15 @@
+{
+	"type": "minecolonies_compatibility:test",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "regions_unexplored"
+		}
+	],
+	"job": "crusher",
+	"target": "regions_unexplored:bone_meal_from_overgrown_bone_block",
+	"result": "minecraft:bone_meal",
+	"ingredients": [
+		"regions_unexplored:overgrown_bone_block"
+	]
+}

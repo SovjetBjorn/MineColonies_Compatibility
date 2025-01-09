@@ -9,6 +9,7 @@
 		"minecraft.SmithingRecipeAccessor",
 		
 		"minecolonies.AbstractAISkeletonMixin",
+		"minecolonies.AbstractCraftingBuildingModuleMixin",
 		"minecolonies.AbstractEntityAIBasicMixin",
 		"minecolonies.AbstractEntityAICraftingMixin",
 		"minecolonies.AbstractEntityAIFightMixin",

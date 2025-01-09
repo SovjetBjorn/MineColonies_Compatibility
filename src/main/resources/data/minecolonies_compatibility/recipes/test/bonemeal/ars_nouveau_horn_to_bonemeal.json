@@ -1,0 +1,15 @@
+{
+	"type": "minecolonies_compatibility:test",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "ars_nouveau"
+		}
+	],
+	"job": "crusher",
+	"target": "ars_nouveau:horn_to_bonemeal",
+	"result": "minecraft:bone_meal",
+	"ingredients": [
+		"ars_nouveau:wilden_horn"
+	]
+}
