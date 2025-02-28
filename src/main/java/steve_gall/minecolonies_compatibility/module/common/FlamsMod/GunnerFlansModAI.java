@@ -17,7 +17,6 @@ public class GunnerFlansModAI extends CustomizedAIGunner
 
     public GunnerFlansModAI()
     {
-
     }
 
     @Override
@@ -66,7 +65,6 @@ public class GunnerFlansModAI extends CustomizedAIGunner
             {
                 return false;
             }
-
         }
 
         return true;
@@ -89,7 +87,6 @@ public class GunnerFlansModAI extends CustomizedAIGunner
         {
             this.setBulletCount(user, 30); // Assuming FlansMod guns have a default magazine size of 30
         }
-
     }
 
     @Override
@@ -114,7 +111,6 @@ public class GunnerFlansModAI extends CustomizedAIGunner
         {
             this.setBulletCount(user, this.getBulletCount(user) - 1);
         }
-
     }
 
     @Override
